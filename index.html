@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+    <title>Who's That Pokémon!</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="https://cdn2.bulbagarden.net/upload/6/67/Pok%C3%A9_Ball_summary_IV.png"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Who's That Pokémon!</h1>
+    <div class="pokedex_container">
+      <div class="pokemon"></div>
+      <div class="guess">
+        <label for="name">Enter Pokémon Name:</label>
+        <input
+          type="text"
+          id="userGuess"
+          name="name"
+          required
+          minlength="1"
+          maxlength="100"
+          size="10"
+        />
+        <button onclick="userGuessing()">Submit</button>
+      </div>
+      <script src="main.js"></script>
+      <div class="result"></div>
+    </div>
+  </body>
+</html>
