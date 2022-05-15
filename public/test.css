@@ -1,0 +1,11 @@
+.back-container {
+    margin-top: 50px;
+    margin-left: 50px;
+    width: 350.5px;
+    height: 500px;
+    border: 1rem solid #192653;
+    border-radius: 5%;
+    background-image: url("PokeCardBack.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
