@@ -37,9 +37,44 @@ function getPokedexList()
     </datalist>`;
 }
 
-function getPokeCard() 
+function getPokeCard(pokemon) {
+    if (typeof pokemon === "undefined") {
+        return getBackPokeCard();
+    }
+
+    return getFrontPokeCard();
+}
+
+function getBackPokeCard() 
 {
     return `<div class="back-container"></div>`;
+}
+
+function getFrontPokeCard()
+{
+    return `<div class="front-container">
+        <div class="name"><h1>bulbasaur <span id="order">#001</span></h1></div>
+        <hr/>
+        <div class="type">
+            <span><div class="grass">grass</div></span>
+            <span><div class="poison">poison</div></span>
+        </div>
+        <hr/>
+        <div class="height-and-weight">
+            <span>
+                <div class="height">
+                    <h3>Height:</h3> 2' 04"  
+                </div>
+            </span>
+
+            <span>
+                <div class="weight">
+                    <h3>Weight:</h3> 15.2 lbs
+                </div>
+            </span>
+        </div>
+        <div class="profile"></div>
+    </div>`;
 }
 
 // Start Webserver
@@ -58,8 +93,7 @@ app.get("/", (request, response) =>
     {
         pokeIndex: getPokedexList(),
         pokeForm: getPokedexForm(),
-        pokemon: request.query.pokemon,
-        pokeCard: getPokeCard()
+        pokeCard: getPokeCard(request.query.pokemon)
     };
 
     response.render("pokedex", variables);

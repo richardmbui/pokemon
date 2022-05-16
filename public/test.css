@@ -1,11 +1,194 @@
-.back-container {
+.back-container, .front-container {
     margin-top: 50px;
     margin-left: 50px;
     width: 350.5px;
     height: 500px;
-    border: 1rem solid #192653;
-    border-radius: 5%;
-    background-image: url("PokeCardBack.png");
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 5%;
+}
+
+.back-container {
+    border: 1rem solid #192653;
+    background-image: url("PokeCardBack.png");
+}
+
+.front-container {
+    border: 1rem solid #ffe165;
+    background-position: 28%;
+    background-image: url("PokeCardFront.png");
+}
+
+.profile {
+    width: 230px;
+    height: 230px;
+    margin-top: 45px;
+    margin-left: 55px;
+    background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.name {
+    text-transform: capitalize;
+    text-align: center;
+    color: Black;
+}
+
+#order {
+    color: #616161;
+}
+
+hr {
+    height: 2px;
+    width: 75%;
+    background-color: #192653;
+    border: none;
+}
+
+.type {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+}
+
+span {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.height-and-weight {
+    height: 32px;
+    display: flex;
+}
+
+.height, .weight {
+    margin-top: 12.5px;
+    width: 139px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+}
+
+h3 {
+    display: inline;
+}
+
+/* TYPES */
+
+.bug, .dark, .dragon, .electric, .fairy, .fighting, 
+.fire, .flying, .ghost, .grass, .ground, .ice,
+.normal, .poison, .psychic, .rock, .steel, .water {
+    width: 139px;
+    text-align: center;
+    line-height: 32px;
+    text-transform: capitalize;
+    font-weight: bolder;
+}
+
+.bug, .dark, .dragon, .fighting, .fire, 
+.ghost, .poison, .psychic, .rock, .water {
+    color: #fff;
+}
+
+.electric, .fairy, .flying, .grass,
+.ground, .ice, .normal, .steel {
+    color: #212121;
+}
+
+.bug {
+    border: 0.5rem solid #729f3f;
+    background-color: #729f3f;
+}
+
+.dark {
+    border: 0.5rem solid #707070;
+    background-color: #707070;
+}
+
+.dragon {
+    border: 0.5rem solid;
+    background: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+    border-image: linear-gradient(180deg, #53a4cf 50%, #f16e57 50%);
+    border-image-slice: 1;
+}
+
+.electric {
+    border: 0.5rem solid #eed535;
+    background-color: #eed535;
+}
+
+.fairy {
+    border: 0.5rem solid #fdb9e9;
+    background-color: #fdb9e9;
+}
+
+.fighting {
+    border: 0.5rem solid #d56723;
+    background-color: #d56723;
+}
+
+.fire {
+    border: 0.5rem solid #fd7d24;
+    background-color: #fd7d24;
+}
+
+.flying {
+    border: 0.5rem solid;
+    background: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    border-image: linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%);
+    border-image-slice: 1;
+}
+
+.ghost {
+    border: 0.5rem solid #7b62a3;
+    background-color: #7b62a3;
+}
+
+.grass {
+    border: 0.5rem solid #9bcc50;
+    background-color: #9bcc50;
+}
+
+.ground {
+    border: 0.5rem solid;
+    background: linear-gradient(180deg, #f7de3f 50%, #ab9842 50%);
+    border-image: linear-gradient(180deg, #f7de3f 50%, #ab9842 50%);
+    border-image-slice: 1;
+}
+
+.ice {
+    border: 0.5rem solid #51c4e7;
+    background-color: #51c4e7;
+}
+
+.normal {
+    border: 0.5rem solid #a4acaf;
+    background-color: #a4acaf;
+}
+
+.poison {
+    border: 0.5rem solid #b97fc9;
+    background-color: #b97fc9;
+}
+
+.psychic {
+    border: 0.5rem solid #f366b9;
+    background-color: #f366b9;
+}
+
+.rock {
+    border: 0.5rem solid #a38c21;
+    background-color: #a38c21;
+}
+
+.steel {
+    border: 0.5rem solid #9eb7b8;
+    background-color: #9eb7b8;
+}
+
+.water {
+    border: 0.5rem solid #4592c4;
+    background-color: #4592c4;
 }
