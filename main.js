@@ -38,6 +38,8 @@ const userGuessing = () => {
       <p>Correct!</p>
       <button onclick="window.location.reload()">Next Pokémon</button>
       `;
+        document.getElementById("submit").disabled = true;
+        document.getElementById("skip").disabled = true;
         const pokemonDiv = document.querySelector(".result");
         pokemonDiv.innerHTML = html;
       } else {
