@@ -38,9 +38,10 @@ function getPokedexList()
 }
 
 function getPokeCard(pokemon) {
-    if (typeof pokemon === "undefined") {
+    if (typeof pokemon === "undefined" || pokemon === "") {
         return getBackPokeCard();
     }
+    console.log(pokemon);
 
     return getFrontPokeCard();
 }

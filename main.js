@@ -1,87 +1,141 @@
-let numGuesses = 3;
-let numRunaway = 0;
-let numSkip = 0;
+process.stdin.setEncoding("utf8");
 
-let apiData = {
-  url: "https://pokeapi.co/api/v2/",
-  type: "pokemon",
-  id: Math.floor(Math.random() * 151).toString(),
-};
+import fetch from 'node-fetch';
+import http from 'http';
+import path from 'path';
+import express from 'express';
+import bodyParser from 'body-parser';
+import { fileURLToPath } from 'url';
 
-// destructuring
-const { url, type, id } = apiData;
-
-const apiUrl = `${url}${type}/${id}`;
-
-fetch(apiUrl)
-  .then((data) => data.json())
-  .then((pokemon) => generateHtml(pokemon));
-
-const pokemon_typings = (data) => {
-  if (data.types.length == 1) {
-    return data.types[0].type.name;
-  } else {
-    return data.types[0].type.name + " - " + data.types[1].type.name;
-  }
-};
-
-const userGuessing = () => {
-  let movieInput = document.getElementById("userGuess").value;
-  let html;
-  // console.log(movieInput.toLowerCase());
-  fetch(apiUrl)
-    .then((data) => data.json())
-    .then((pokemon) => {
-      if (movieInput.toLowerCase() === pokemon.name) {
-        console.log("correct");
-        html = `
-      <p>Correct!</p>
-      <button onclick="window.location.reload()">Next Pokémon</button>
-      `;
-        document.getElementById("submit").disabled = true;
-        document.getElementById("skip").disabled = true;
-        const pokemonDiv = document.querySelector(".result");
-        pokemonDiv.innerHTML = html;
-      } else {
-        console.log("incorrect");
-        numGuesses--;
-        if (numGuesses == 0) {
-          html = `<p>Incorrect! No more tries left.</p>
-          <button onclick="window.location.reload()">Next Pokémon</button>`;
-          document.getElementById("submit").disabled = true;
-          document.getElementById("skip").disabled = true;
-          //increase the number of pokemon that got away, add this # to database and shown in pokedex
-          numRunaway++;
-        } else {
-          html = `<p>Incorrect! ${numGuesses} tries left.</p>`;
-        }
-        const pokemonDiv = document.querySelector(".result");
-        pokemonDiv.innerHTML = html;
-      }
-    });
-};
-
-function skip() {
-  //increase the number of skips, add this # to database and shown in pokedex
-  numSkip++;
-  location.reload();
+if (process.argv.length != 2)
+{
+  process.stdout.write(`Usage test.js`);
+  process.exit(1);
 }
 
-const generateHtml = (data) => {
-  console.log(data);
-  const html = `
-  <div class = "name">Pokédex Num. ${data.id}</div> 
-        <img src=${data.sprites.front_default}>
-        <div class = "details_box">
-            <span class = "tag_details">
-            Type: ${pokemon_typings(data)}
-            </span>    
-            <span class = "tag_details">Height: ${data.height / 10} m</span>
-            <span class = "tag_details">Weight: ${data.weight / 10} kg</span> &nbsp
-            <button type="button" class="btn btn-danger btn-sm"><u>Go To <strong>Pokédex</strong></u></button>
-        </div> <br>
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    `;
-  const pokemonDiv = document.querySelector(".pokemon");
-  pokemonDiv.innerHTML = html;
-};
+// Start Webserver
+let app = express();
+let portNumber = 4001;
+// let homeRef = `<a href="http://localhost:4001">HOME</a>`;
+
+app.use(bodyParser.urlencoded({extended:false}));
+app.use("/public", express.static(path.resolve(dirname, "public")));
+app.set("views", path.resolve(dirname, "templates"));
+app.set("view engine", "ejs");
+
+app.get("/", (request, response) =>
+{
+  response.render("index");
+}
+);
+
+app.get("/pokedex", (request, response) =>
+{
+  let variables = 
+  {
+      pokeIndex: getPokedexList(),
+      pokeForm: getPokedexForm(),
+      pokeCard: getPokeCard(request.query.pokemon)
+  };
+
+  response.render("pokedex", variables);
+});
+
+console.log(`Web server is running at http://localhost:4001`);
+http.createServer(app).listen(portNumber);
+
+//Methods
+function getPokedexForm()
+{
+    return `<form id="pokeQuery" action="/" method="get"> 
+        <fieldset> 
+            <legend>Pokédex</legend> 
+            <label>
+                <strong>Enter Pokémon: </strong> 
+                <input list="pokeIndex" name="pokemon" autocomplete="off">
+            </label> 
+            <input type="submit" value="Retrieve">
+        </fieldset> 
+    </form>`;
+}
+
+function getPokedexList()
+{
+    return `<datalist id="pokeIndex">
+        <option value="Edge">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="google">
+    </datalist>`;
+}
+
+function getPokeCard(pokemon) {
+    if (typeof pokemon === "undefined" || pokemon === "") {
+        return getBackPokeCard();
+    }
+    console.log(pokemon);
+
+    return getFrontPokeCard();
+}
+
+function getBackPokeCard() 
+{
+    return `<div class="back-container"></div>`;
+}
+
+function getFrontPokeCard()
+{
+    return `<div class="front-container">
+        <div class="name"><h1>bulbasaur <span id="order">#001</span></h1></div>
+        <hr/>
+        <div class="type">
+            <span><div class="grass">grass</div></span>
+            <span><div class="poison">poison</div></span>
+        </div>
+        <hr/>
+        <div class="height-and-weight">
+            <span>
+                <div class="height">
+                    <h3>Height:</h3> 2' 04"  
+                </div>
+            </span>
+
+            <span>
+                <div class="weight">
+                    <h3>Weight:</h3> 15.2 lbs
+                </div>
+            </span>
+        </div>
+        <div class="profile"></div>
+    </div>`;
+}
+
+// Command Line Interpreter
+let prompt = "Stop to shutdown the server: ";
+process.stdout.write(prompt);
+
+process.stdin.on("readable", () =>
+{
+  let dataInput = process.stdin.read();
+
+  if (dataInput !== null)
+  {
+    let command = dataInput.trim();
+
+    if (command === "stop")
+    {
+      process.stdout.write("Shutting down the server\n");
+      process.exit(0);
+    }
+    else
+    {
+        process.stdout.write(`Invalid command: ${command}\n`);
+    }
+
+    process.stdout.write(prompt);
+    process.stdin.resume();
+  }
+});
