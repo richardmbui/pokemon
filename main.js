@@ -1,6 +1,5 @@
 process.stdin.setEncoding("utf8");
 
-import fetch from 'node-fetch';
 import http from 'http';
 import path from 'path';
 import express from 'express';
@@ -17,7 +16,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Start Webserver
 let app = express();
-let portNumber = 4001;
+let portNumber = process.env.PORT || 4001;
 // let homeRef = `<a href="http://localhost:4001">HOME</a>`;
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -28,8 +27,7 @@ app.set("view engine", "ejs");
 app.get("/", (request, response) =>
 {
   response.render("index");
-}
-);
+});
 
 app.get("/pokedex", (request, response) =>
 {
@@ -40,16 +38,18 @@ app.get("/pokedex", (request, response) =>
       pokeCard: getPokeCard(request.query.pokemon)
   };
 
+  console.log(variables.pokeCard);
+
   response.render("pokedex", variables);
 });
 
-console.log(`Web server is running at http://localhost:4001`);
+console.log(`Web server is running at http://localhost:${portNumber}`);
 http.createServer(app).listen(portNumber);
 
 //Methods
 function getPokedexForm()
 {
-    return `<form id="pokeQuery" action="/" method="get"> 
+    return `<form id="pokeQuery" action="/pokedex" method="get"> 
         <fieldset> 
             <legend>Pokédex</legend> 
             <label>
@@ -64,11 +64,7 @@ function getPokedexForm()
 function getPokedexList()
 {
     return `<datalist id="pokeIndex">
-        <option value="Edge">
-        <option value="Firefox">
-        <option value="Chrome">
-        <option value="Opera">
-        <option value="google">
+        <option value="Bulbasaur">
     </datalist>`;
 }
 

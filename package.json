@@ -2,10 +2,10 @@
     "name": "pokemon",
     "version": "1.0.0",
     "description": "",
-    "main": "test.js",
+    "main": "main.js",
     "type": "module",
     "scripts": {
-        "start": "nodemon test.js",
+        "start": "nodemon main.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
