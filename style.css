@@ -12,13 +12,13 @@ img {
   width: 12em;
 }
 .pokedex_container {
-  background: linear-gradient(35deg, #ecb0b0 0%, #912f2f 100%);
+  background: linear-gradient(35deg, #b0dbec 0%, #2f913f 100%);
   width: 30em;
   padding: 5px;
   border-width: 4px;
   border-style: ridge;
   border-radius: 3px;
-  border-color: #8b1010;
+  border-color: #adc71b;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .name {
